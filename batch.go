@@ -130,8 +130,12 @@ func (b *Batch) doOperation(ctx context.Context, operation Operation) (Operation
 		//Partial response
 		return result, err
 	}
-	respBodyString := string(responseBody)
-	result.Body = &respBodyString
+
+	rawResponse := new(interface{})
+	if err := json.Unmarshal(responseBody, rawResponse); err != nil {
+		return result, err
+	}
+	result.Body = rawResponse
 
 	return result, nil
 }
