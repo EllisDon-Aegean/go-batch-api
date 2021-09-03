@@ -86,7 +86,7 @@ func (b *Batch) Process(ctx context.Context, operations BatchPayload) (BatchPayl
 }
 
 func (b *Batch) doOperation(ctx context.Context, operation Operation) (Operation, error) {
-	result := Operation{}
+	result := Operation{Path: operation.Path, Method: operation.Method, BulkId: operation.BulkId}
 	path := b.basePath + operation.Path
 
 	client := &http.Client{}
